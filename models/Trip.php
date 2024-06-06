@@ -11,6 +11,7 @@ class Trip
     private bool $collaborative;
     private bool $private; //true = public  & false = private
     private int $countOfPerson;
+    private string $image;  
     private int $userId;
 
     public function __construct(array $data)
@@ -134,6 +135,18 @@ class Trip
     public function setCountOfPerson(int $countOfPerson): self
     {
         $this->countOfPerson = $countOfPerson;
+
+        return $this;
+    }
+
+    public function getImage(): string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

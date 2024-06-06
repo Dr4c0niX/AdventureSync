@@ -28,6 +28,8 @@ if ($_POST && $_SESSION && $_SESSION["is_connected"]) {
         <input type="date" name="startDate" id="startDate" class="form-control" required>
         <label for="endDate">Date de fin</label>
         <input type="date" name="endDate" id="endDate" class="form-control" required>
+        <label for="image">Photos de votre voyage</label>
+        <input type="file" name="image" id="image" class="form-control">
         <input type="submit" value="Créer un article" class="mt-2 btn btn-primary">
     </form>
 </div>

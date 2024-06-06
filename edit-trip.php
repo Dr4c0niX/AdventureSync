@@ -5,23 +5,36 @@ $tripsManager = new TripsManager();
 $usersManager = new UsersManager();
 $trip = null;
 
-if ($_GET && isset($_GET["id"])) {
+if ($_GET && isset($_GET["id"])) 
+{
     $trip = $tripsManager->getById($_GET["id"]); //AJOUTER POUR QUE SEUL CREATEUR SE CO
 }
 
 $loggedInUser = $usersManager->getLoggedInUser();
 
-if (!$loggedInUser) {
+if (!$loggedInUser) 
+{
     echo "<script>alert('Pourquoi voulez-vous modifier un voyage qui n\'est pas le vôtre ?'); window.location.href='trip.php';</script>";
     exit;
 }
 
-if ($trip && $trip->getUserId() !== $loggedInUser->getId()) {
+if ($trip && $trip->getUserId() !== $loggedInUser->getId()) 
+{
     echo "<script>alert('Pourquoi voulez-vous modifier un voyage qui n\'est pas le vôtre ?'); window.location.href='trip.php';</script>";
     exit;
 }
 
-if ($_POST) {
+if ($_SERVER["REQUEST_METHOD"] === "POST") 
+{
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        $uploadDirectory = "images/upload/";
+        $filename = basename($_FILES['image']['name']);
+        $targetPath = $uploadDirectory . $filename;
+
+        move_uploaded_file($_FILES['image']['tmp_name'], $targetPath);
+
+        $trip->setImage($filename);
+    }
     $trip->setTitle($_POST["title"]);
     $trip->setDescription($_POST["description"]);
     $trip->setDestination($_POST["destination"]);
@@ -35,7 +48,7 @@ if ($_POST) {
 }
 ?>
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     <label for="title">Titre:</label>
     <input type="text" id="title" name="title" value="<?= $trip->getTitle() ?>" required>
     <label for="description">Description:</label>
@@ -52,5 +65,17 @@ if ($_POST) {
     <input type="checkbox" id="private" name="private" <?= $trip->isPrivate() ? "checked" : "" ?>>
     <label for="countOfPerson">Count of Person:</label>
     <input type="number" id="countOfPerson" name="countOfPerson" value="<?= $trip->getCountOfPerson() ?>" min="1" required>
-    <input type="submit" value="Update">
+    
+    <label for="image">Image actuelle:</label>
+    <?php if ($trip->getImage()): ?>
+        <img src="images/upload/<?= $trip->getImage() ?>" alt="image <?= $trip->getTitle() ?>">
+    <?php else: ?>
+        <p>Aucune image actuellement.</p>
+    <?php endif; ?>
+
+    <label for="image">Changer l'image:</label>
+    <input type="file" id="image" name="image">
+    <p>Si vous ne choisissez pas une nouvelle image, l'image actuelle restera en place.</p>
+    
+<input type="submit" value="Update">
 </form>

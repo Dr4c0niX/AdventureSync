@@ -27,7 +27,7 @@ class TripsManager
     public function create(Trip $newTrip): void
     {
         $usersManager = new UsersManager();
-        $req = $this->pdo->prepare("INSERT INTO `trip` (title, description, destination, startDate, endDate, collaborative, private, countOfPerson, userId) VALUES (:title, :description, :destination, :startDate, :endDate, :collaborative, :private, :countOfPerson, :userId)");
+        $req = $this->pdo->prepare("INSERT INTO `trip` (title, description, destination, startDate, endDate, collaborative, private, countOfPerson, image, userId) VALUES (:title, :description, :destination, :startDate, :endDate, :collaborative, :private, :countOfPerson, :image, :userId)");
 
         $req->bindValue(":title", htmlspecialchars($newTrip->getTitle()), PDO::PARAM_STR);
         $req->bindValue(":description", htmlspecialchars($newTrip->getDescription()), PDO::PARAM_STR);
@@ -37,6 +37,7 @@ class TripsManager
         $req->bindValue(":collaborative", htmlspecialchars($newTrip->isCollaborative()), PDO::PARAM_BOOL);
         $req->bindValue(":private", htmlspecialchars($newTrip->isPrivate()), PDO::PARAM_BOOL);
         $req->bindValue(":countOfPerson", htmlspecialchars($newTrip->getCountOfPerson()), PDO::PARAM_INT);
+        $req->bindValue(":image", htmlspecialchars($newTrip->getImage()), PDO::PARAM_STR);
         $req->bindValue(":userId", htmlspecialchars($usersManager->getByEmail($_SESSION["is_connected"])->getId()), PDO::PARAM_INT);
         $req->execute();
     }
@@ -73,7 +74,7 @@ class TripsManager
 
     public function update(Trip $trip): void
     {
-        $req = $this->pdo->prepare("UPDATE trip SET title = :title, description = :description, destination = :destination, startDate = :startDate, endDate = :endDate, collaborative = :collaborative, private = :private, countOfPerson = :countOfPerson, userId = :userId WHERE id = :id");
+        $req = $this->pdo->prepare("UPDATE trip SET title = :title, description = :description, destination = :destination, startDate = :startDate, endDate = :endDate, collaborative = :collaborative, private = :private, countOfPerson = :countOfPerson, image = :image, userId = :userId WHERE id = :id");
 
         $req->bindValue(":title", htmlspecialchars($trip->getTitle()), PDO::PARAM_STR);
         $req->bindValue(":description", htmlspecialchars($trip->getDescription()), PDO::PARAM_STR);
@@ -83,6 +84,7 @@ class TripsManager
         $req->bindValue(":collaborative", htmlspecialchars($trip->isCollaborative()), PDO::PARAM_BOOL);
         $req->bindValue(":private", htmlspecialchars($trip->isPrivate()), PDO::PARAM_BOOL);
         $req->bindValue(":countOfPerson", htmlspecialchars($trip->getCountOfPerson()), PDO::PARAM_INT);
+        $req->bindValue(":image", htmlspecialchars($trip->getImage()), PDO::PARAM_STR);
         $req->bindValue(":userId", htmlspecialchars($trip->getUserId()), PDO::PARAM_INT);
         $req->bindValue(":id", htmlspecialchars($trip->getId()), PDO::PARAM_INT);
         $req->execute();
