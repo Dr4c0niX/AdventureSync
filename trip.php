@@ -1,7 +1,6 @@
 <?php
-    require("./layout/header.php");
+require("./layout/header.php");
 
-    $usersManager = new UsersManager();
     $tripsManager = new TripsManager();
     $trips = $tripsManager->getAll();
     $loggedInUser = $usersManager->getLoggedInUser()

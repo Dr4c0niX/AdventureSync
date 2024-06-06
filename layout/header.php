@@ -55,6 +55,9 @@
                         <li>
                             <a class="nav-link" href="./trip.php">Voyages</a>
                         </li>
+                        <li>
+                            <a class="nav-link" href="./article.php">Articles</a>
+                        </li>
                         <?php if ($_SESSION && $_SESSION["is_connected"]) : ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="./create-trip.php">Ajouter un voyage</a>

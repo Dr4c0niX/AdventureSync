@@ -1,7 +1,7 @@
 <?php
 require("models/Trip.php");
 
-class tripsManager
+class TripsManager
 {
     private PDO $pdo;
 

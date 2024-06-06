@@ -27,7 +27,7 @@ class ArticlesManager
     public function create(Article $newArticle): void
     {
         $usersManager = new UsersManager();
-        $req = $this->pdo->prepare("INSERT INTO `article` (title, content, userId) VALUES (:title, :content, :userId)");
+        $req = $this->pdo->prepare("INSERT INTO `article` (title, description, destination, startDate, endDate, userId) VALUES (:title, :description, :destination, :startDate, :endDate, :userId)");
 
         $req->bindValue(":title", htmlspecialchars($newArticle->getTitle()), PDO::PARAM_STR);
         $req->bindValue(":description", htmlspecialchars($newArticle->getDescription()), PDO::PARAM_STR);
@@ -70,7 +70,7 @@ class ArticlesManager
 
     public function update(Article $article): void
     {
-        $req = $this->pdo->prepare("UPDATE article SET title = :title, content = :content WHERE id = :id");
+        $req = $this->pdo->prepare("UPDATE article SET title = :title, description = :description, destination = :destination, startDate = :startDate, endDate = :endDate, userId = :userId WHERE id = :id");
         $req->bindValue(":title", htmlspecialchars($article->getTitle()), PDO::PARAM_STR);
         $req->bindValue(":description", htmlspecialchars($article->getDescription()), PDO::PARAM_STR);
         $req->bindValue(":destination", htmlspecialchars($article->getDestination()), PDO::PARAM_STR);
