@@ -15,15 +15,13 @@ if ($_POST) {
     // Récupère l'objet utilisateur complet en fonction de l'e-mail saisit
     $user = $usersManager->getByEmail($_POST["email"]);
   
-    var_dump(password_verify($_POST["password"], $user->getPassword()));
-    // Vérifie que cet utilisateur existe et que son mot de passe correspond à celui saisit
     if ($user && password_verify($_POST["password"], $user->getPassword())) {
         // Le connecte en mettant à jour la session
         $_SESSION["is_connected"] = $_POST["email"];
         // Redirection sur la page d'accueil
         echo "<script>window.location.href='index.php'</script>";
     } else {
-        echo 'ERREUR'; 
+        echo '<p class="error-message">Email ou mot de passe incorrect</p>'; 
     }
 }
 

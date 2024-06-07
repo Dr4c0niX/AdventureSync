@@ -1,14 +1,18 @@
 <?php require("./layout/header.php");
 
 if ($_POST) {
-    // Met à jour le mot de passe saisit avec une version encryptée
-    $_POST["password"] = password_hash($_POST["password"], PASSWORD_DEFAULT);
-    // Créé l'utilisateur en BDD
-    $usersManager->create(new User($_POST));
-    // Connecte l'utilisateur en mettant à jour la session
-    $_SESSION["is_connected"] = $_POST["email"];
-    // Redirection sur la page d'accueil
-    echo "<script>window.location.href='index.php'</script>";
+    if ($usersManager->emailExists($_POST["email"])) {
+        echo "<script>alert('Cette adresse e-mail est déjà utilisée.'); window.location.href='login.php';</script>";
+    } else {
+        // Met à jour le mot de passe saisit avec une version encryptée
+        $_POST["password"] = password_hash($_POST["password"], PASSWORD_DEFAULT);
+        // Créé l'utilisateur en BDD
+        $usersManager->create(new User($_POST));
+        // Connecte l'utilisateur en mettant à jour la session
+        $_SESSION["is_connected"] = $_POST["email"];
+        // Redirection sur la page d'accueil
+        echo "<script>window.location.href='index.php'</script>";
+    }
 }
 
 ?>

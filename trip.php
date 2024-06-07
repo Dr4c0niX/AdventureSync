@@ -2,8 +2,10 @@
 require("./layout/header.php");
 
     $tripsManager = new TripsManager();
+    $commentsManager = new CommentsManager();
     $trips = $tripsManager->getAll();
-    $loggedInUser = $usersManager->getLoggedInUser()
+    $loggedInUser = $usersManager->getLoggedInUser();
+    $comments = $commentsManager->getAll();
 ?>
 
 <div>

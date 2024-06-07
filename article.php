@@ -10,6 +10,9 @@ require("./layout/header.php");
     <?php foreach ($articles as $article): ?>
         <div class="trip-card">
             <h1><?= $article->getTitle() ?></h1>
+            <?php if ($article->getImage()): ?>
+                <img src="images/upload/<?= $article->getImage() ?>" alt="image <?= $article->getTitle() ?>" class="trip-image">
+            <?php endif; ?>
             <p><?= $article->getDescription() ?></p>
             <h3>Destination: <?= $article->getDestination() ?></h3>
             <h3>Date de début: <?= $article->getStartDate() ?></h3>

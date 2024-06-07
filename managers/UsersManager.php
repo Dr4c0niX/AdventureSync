@@ -74,6 +74,13 @@ class UsersManager
         return $users;
     }
 
+    public function emailExists($email) 
+    {
+        $query = $this->db->prepare("SELECT * FROM user WHERE email = :email");
+        $query->execute(['email' => $email]);
+        return $query->fetch() !== false;
+    }
+
     public function update(User $user): void
     {
         $req = $this->db->prepare("UPDATE user SET email = :email, username = :username, firstName = :firstName, lastName = :lastName, password = :password, birthDate = :birthDate WHERE id = :id");

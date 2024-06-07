@@ -8,6 +8,7 @@ class Article
     private string $destination;
     private string $startDate;
     private string $endDate;
+    private string $image;
     private string $userId;
 
     public function __construct(array $data)
@@ -93,6 +94,18 @@ class Article
     public function setEndDate(string $endDate): self
     {
         $this->endDate = $endDate;
+
+        return $this;
+    }
+
+    public function getImage(): string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

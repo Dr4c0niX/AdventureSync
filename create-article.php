@@ -1,14 +1,46 @@
 <?php
 require("./layout/header.php");
 
-if (!isset($_SESSION["is_connected"])) {
+if (!isset($_SESSION["is_connected"])) 
+{
     echo "<script>alert('Vous devez vous connecter pour accéder à cette page.'); window.location.href='./login.php';</script>";
     exit;
 }
 
 $articlesManager = new ArticlesManager();
 
-if ($_POST && $_SESSION && $_SESSION["is_connected"]) {
+if ($_POST && $_SESSION && $_SESSION["is_connected"]) 
+{
+    $file_name = '';
+    if (isset($_FILES['image']) && $_FILES['image']['name'] != '') {
+        $errors = array();
+        $file_name = $_FILES['image']['name'];
+        $file_size = $_FILES['image']['size'];
+        $file_tmp = $_FILES['image']['tmp_name'];
+        $file_type = $_FILES['image']['type'];
+        $file_parts = explode('.', $_FILES['image']['name']);
+        $file_ext = strtolower(end($file_parts));
+        $extensions = array("jpeg", "jpg", "png", "webp");
+
+        if (in_array($file_ext, $extensions) === false) {
+            $errors[] = "extension not allowed, please choose a JPEG or PNG file.";
+        }
+
+        if ($file_size > 2097152) {
+            $errors[] = 'File size must be exactly 2 MB';
+        }
+
+        if (!empty($errors)) {
+            foreach($errors as $error) {
+                echo "<script>alert('{$error}'); window.location.href='create-article.php'</script>";
+            }
+            exit;
+        }
+
+        move_uploaded_file($file_tmp, "images/upload/" . $file_name);
+    }
+
+    $_POST['image'] = $file_name;
     $articlesManager->create(new Article($_POST));
     echo "<script>alert('Bravo ! Vous venez de créer votre article');window.location.href='index.php'</script>";
 }
@@ -17,7 +49,7 @@ if ($_POST && $_SESSION && $_SESSION["is_connected"]) {
 
 <div>
     <h1>Créer un article</h1>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         <label for="title">Titre</label>
         <input type="text" name="title" id="title" placeholder="Titre de l'article" class="form-control" required>
         <label for="description">Description</label>

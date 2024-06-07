@@ -27,13 +27,14 @@ class ArticlesManager
     public function create(Article $newArticle): void
     {
         $usersManager = new UsersManager();
-        $req = $this->pdo->prepare("INSERT INTO `article` (title, description, destination, startDate, endDate, userId) VALUES (:title, :description, :destination, :startDate, :endDate, :userId)");
+        $req = $this->pdo->prepare("INSERT INTO `article` (title, description, destination, startDate, endDate, image, userId) VALUES (:title, :description, :destination, :startDate, :endDate, :image, :userId)");
 
         $req->bindValue(":title", htmlspecialchars($newArticle->getTitle()), PDO::PARAM_STR);
         $req->bindValue(":description", htmlspecialchars($newArticle->getDescription()), PDO::PARAM_STR);
         $req->bindValue(":destination", htmlspecialchars($newArticle->getDestination()), PDO::PARAM_STR);
         $req->bindValue(":startDate", htmlspecialchars($newArticle->getStartDate()), PDO::PARAM_STR);
         $req->bindValue(":endDate", htmlspecialchars($newArticle->getEndDate()), PDO::PARAM_STR);
+        $req->bindValue(":image", htmlspecialchars($newArticle->getImage()), PDO::PARAM_STR);
         $req->bindValue(":userId", htmlspecialchars($usersManager->getByEmail($_SESSION["is_connected"])->getId()), PDO::PARAM_INT);
         $req->execute();
     }
@@ -70,12 +71,13 @@ class ArticlesManager
 
     public function update(Article $article): void
     {
-        $req = $this->pdo->prepare("UPDATE article SET title = :title, description = :description, destination = :destination, startDate = :startDate, endDate = :endDate, userId = :userId WHERE id = :id");
+        $req = $this->pdo->prepare("UPDATE article SET title = :title, description = :description, destination = :destination, startDate = :startDate, endDate = :endDate, image = :image, userId = :userId WHERE id = :id");
         $req->bindValue(":title", htmlspecialchars($article->getTitle()), PDO::PARAM_STR);
         $req->bindValue(":description", htmlspecialchars($article->getDescription()), PDO::PARAM_STR);
         $req->bindValue(":destination", htmlspecialchars($article->getDestination()), PDO::PARAM_STR);
         $req->bindValue(":startDate", htmlspecialchars($article->getStartDate()), PDO::PARAM_STR);
         $req->bindValue(":endDate", htmlspecialchars($article->getEndDate()), PDO::PARAM_STR);
+        $req->bindValue(":image", htmlspecialchars($article->getImage()), PDO::PARAM_STR);
         $req->bindValue(":userId", htmlspecialchars($article->getUserId()), PDO::PARAM_INT);
         $req->bindValue(":id", $article->getId(), PDO::PARAM_INT);
         $req->execute();

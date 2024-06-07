@@ -18,6 +18,7 @@ class Trip
     {
         $this->hydrate($data);
         $this->collaborative = isset($data['collaborative']) ? (bool)$data['collaborative'] : false;
+        $this->private = isset($data['private']) ? $data['private'] : false;
     }
 
     public function hydrate(array $data): void

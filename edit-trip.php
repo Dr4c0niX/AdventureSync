@@ -26,15 +26,36 @@ if ($trip && $trip->getUserId() !== $loggedInUser->getId())
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") 
 {
-    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-        $uploadDirectory = "images/upload/";
-        $filename = basename($_FILES['image']['name']);
-        $targetPath = $uploadDirectory . $filename;
+    $file_name = '';
+    if (isset($_FILES['image']) && $_FILES['image']['name'] != '') {
+        $errors = array();
+        $file_name = $_FILES['image']['name'];
+        $file_size = $_FILES['image']['size'];
+        $file_tmp = $_FILES['image']['tmp_name'];
+        $file_type = $_FILES['image']['type'];
+        $file_parts = explode('.', $_FILES['image']['name']);
+        $file_ext = strtolower(end($file_parts));
+        $extensions = array("jpeg", "jpg", "png" , "webp");
 
-        move_uploaded_file($_FILES['image']['tmp_name'], $targetPath);
+        if (in_array($file_ext, $extensions) === false) {
+            $errors[] = "extension not allowed, please choose a JPEG or PNG file.";
+        }
 
-        $trip->setImage($filename);
+        if ($file_size > 2097152) {
+            $errors[] = 'File size must be exactly 2 MB';
+        }
+
+        if (!empty($errors)) {
+            foreach($errors as $error) {
+                echo "<script>alert('{$error}'); window.location.href='edit-trip.php?id={$trip->getId()}';</script>";
+            }
+            exit;
+        }
+
+        move_uploaded_file($file_tmp, "images/upload/" . $file_name);
+        $trip->setImage($file_name);
     }
+
     $trip->setTitle($_POST["title"]);
     $trip->setDescription($_POST["description"]);
     $trip->setDestination($_POST["destination"]);
@@ -42,7 +63,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
     $trip->setEndDate($_POST["endDate"]);
     $trip->setCollaborative(isset($_POST["collaborative"]));
     $trip->setPrivate(isset($_POST["private"]));
-    $trip->setCountOfPerson($_POST["countOfPerson"]);
     $tripsManager->update($trip);
     echo "<script>alert('Voyage mis à jour avec succès.'); window.location.href='trip.php';</script>";
 }
@@ -72,10 +92,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
     <?php else: ?>
         <p>Aucune image actuellement.</p>
     <?php endif; ?>
-
     <label for="image">Changer l'image:</label>
     <input type="file" id="image" name="image">
     <p>Si vous ne choisissez pas une nouvelle image, l'image actuelle restera en place.</p>
     
-<input type="submit" value="Update">
+    <input type="submit" value="Update">
 </form>
