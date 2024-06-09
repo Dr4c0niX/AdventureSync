@@ -9,6 +9,7 @@ class User
     private string $lastName;
     private string $password;
     private string $birthDate;
+    private bool $admin;
 
     public function __construct(array $data)
     {
@@ -105,6 +106,18 @@ class User
     public function setBirthDate(string $birthDate): self
     {
         $this->birthDate = $birthDate;
+
+        return $this;
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->admin;
+    }
+
+    public function setAdmin(bool $admin): self
+    {
+        $this->admin = $admin;
 
         return $this;
     }

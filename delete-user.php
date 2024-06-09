@@ -26,6 +26,6 @@
     <form method="post">
         <label for="password">Mot de passe</label>
         <input type="password" name="password" id="password" class="form-control" required>
-        <input type="submit" value="Supprimer votre compte" class="mt-2 btn btn-danger">
+        <input type="submit" value="Supprimer votre compte" class="mt-2 btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ?');">
     </form>
 </div>

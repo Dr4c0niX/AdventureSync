@@ -1,7 +1,14 @@
 <?php require("./layout/header.php");
 
 if ($_POST) {
-    if ($usersManager->emailExists($_POST["email"])) {
+    $birthDate = new DateTime($_POST["birthDate"]);
+    $today = new DateTime();
+    $interval = $birthDate->diff($today);
+    $age = $interval->y;
+
+    if ($age < 16) {
+        echo "<script>alert('Vous devez avoir au moins 16 ans pour vous inscrire.'); window.location.href='register.php';</script>";
+    } elseif ($usersManager->emailExists($_POST["email"])) {
         echo "<script>alert('Cette adresse e-mail est déjà utilisée.'); window.location.href='login.php';</script>";
     } else {
         // Met à jour le mot de passe saisit avec une version encryptée

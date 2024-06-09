@@ -7,7 +7,7 @@ $trip = null;
 
 if ($_GET && isset($_GET["id"])) 
 {
-    $trip = $tripsManager->getById($_GET["id"]); //AJOUTER POUR QUE SEUL CREATEUR SE CO
+    $trip = $tripsManager->getById($_GET["id"]);
 }
 
 $loggedInUser = $usersManager->getLoggedInUser();
@@ -26,6 +26,14 @@ if ($trip && $trip->getUserId() !== $loggedInUser->getId())
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") 
 {
+    $startDate = new DateTime($_POST["startDate"]);
+    $endDate = new DateTime($_POST["endDate"]);
+
+    if ($endDate < $startDate) {
+        echo "<script>alert('La date de fin ne peut pas être inférieure à la date de début.'); window.location.href='edit-trip.php?id={$trip->getId()}';</script>";
+        exit;
+    }
+
     $file_name = '';
     if (isset($_FILES['image']) && $_FILES['image']['name'] != '') {
         $errors = array();

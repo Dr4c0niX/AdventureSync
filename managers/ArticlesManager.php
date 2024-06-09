@@ -57,6 +57,18 @@ class ArticlesManager
         return new Article($data);
     }
 
+    public function getAllArticlesByUserId($userId) {
+        $articles = array();
+        $query = $this->pdo->prepare("SELECT * FROM article WHERE userId = :userId");
+        $query->execute(['userId' => $userId]);
+    
+        while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
+            $articles[] = new Article($data);
+        }
+    
+        return $articles;
+    }
+
     public function getAll(): array
     {
         $req = $this->pdo->prepare("SELECT * FROM article");

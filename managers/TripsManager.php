@@ -60,6 +60,18 @@ class TripsManager
         return new Trip($data);
     }
 
+    public function getAllTripsByUserId($userId) {
+        $trips = array();
+        $query = $this->pdo->prepare("SELECT * FROM trip WHERE userId = :userId");
+        $query->execute(['userId' => $userId]);
+    
+        while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
+            $trips[] = new Trip($data);
+        }
+    
+        return $trips;
+    }
+
     public function getAll(): array
     {
         $req = $this->pdo->query("SELECT * FROM `trip`");

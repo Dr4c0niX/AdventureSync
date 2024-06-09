@@ -22,6 +22,14 @@ if ($article && $article->getUserId() != $loggedInUser->getId()) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $startDate = new DateTime($_POST["startDate"]);
+    $endDate = new DateTime($_POST["endDate"]);
+
+    if ($endDate < $startDate) {
+        echo "<script>alert('La date de fin ne peut pas être inférieure à la date de début.'); window.location.href='edit-article.php?id={$article->getId()}';</script>";
+        exit;
+    }
+
     if (isset($_FILES['image']) && $_FILES['image']['name'] != '') {
         $errors = array();
         $file_name = $_FILES['image']['name'];

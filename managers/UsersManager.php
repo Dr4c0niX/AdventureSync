@@ -45,6 +45,18 @@ class UsersManager
         return new User($data);
     }
 
+    public function getUsersOrderedByEmail(): array
+    {
+        $req = $this->db->query("SELECT * FROM `user` ORDER BY email");
+        $req->execute();
+        $data = $req->fetchAll();
+        $users = [];
+        foreach ($data as $user) {
+            $users[] = new User($user);
+        }
+        return $users;
+    }
+
     public function getById(int $id): User
     {
         $req = $this->db->prepare("SELECT * FROM user WHERE id = :id");
@@ -83,7 +95,7 @@ class UsersManager
 
     public function update(User $user): void
     {
-        $req = $this->db->prepare("UPDATE user SET email = :email, username = :username, firstName = :firstName, lastName = :lastName, password = :password, birthDate = :birthDate WHERE id = :id");
+        $req = $this->db->prepare("UPDATE user SET email = :email, username = :username, firstName = :firstName, lastName = :lastName, password = :password, birthDate = :birthDate, admin = :admin WHERE id = :id");
 
         $req->bindValue(":email", htmlspecialchars($user->getEmail()), PDO::PARAM_STR);
         $req->bindValue(":username", htmlspecialchars($user->getUsername()), PDO::PARAM_STR);
@@ -92,6 +104,7 @@ class UsersManager
         $req->bindValue(":password", htmlspecialchars($user->getPassword()), PDO::PARAM_STR);
         $req->bindValue(":birthDate", htmlspecialchars($user->getBirthDate()), PDO::PARAM_STR);
         $req->bindValue(":id", htmlspecialchars($user->getId()), PDO::PARAM_INT);
+        $req->bindValue(":admin", htmlspecialchars($user->isAdmin()), PDO::PARAM_BOOL);
         $req->execute();
     }
 

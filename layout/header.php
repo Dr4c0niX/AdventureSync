@@ -73,6 +73,11 @@
                             <li>
                                 <a class="nav-link" href="./edit-profile.php?email=<?= $_SESSION["is_connected"] ?>">Modifier votre profil</a> <!-- lien de la page à mettre avec l'id de user -->
                             </li>
+                            <?php if ($usersManager->getLoggedInUser()->isAdmin()) : ?>
+                                <li>
+                                    <a class="nav-link" href="./admin.php">Admin</a>
+                                </li>
+                            <?php endif ?>
                         <?php else : ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="./login.php">Se connecter</a>
@@ -87,3 +92,5 @@
         </nav>
     </header>
     <main class="container">
+
+    <script src="script.js"></script>

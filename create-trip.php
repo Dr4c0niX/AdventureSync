@@ -11,6 +11,14 @@ $tripsManager = new TripsManager();
 
 if ($_POST && $_SESSION && $_SESSION["is_connected"]) 
 {
+    $startDate = new DateTime($_POST["startDate"]);
+    $endDate = new DateTime($_POST["endDate"]);
+
+    if ($endDate < $startDate) {
+        echo "<script>alert('La date de fin ne peut pas être inférieure à la date de début.'); window.location.href='create-trip.php';</script>";
+        exit;
+    }
+
     $file_name = '';
     if (isset($_FILES['image']) && $_FILES['image']['name'] != '') {
         $errors = array();
