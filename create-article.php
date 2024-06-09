@@ -13,9 +13,9 @@ if ($_POST && $_SESSION && $_SESSION["is_connected"])
 {
     $startDate = new DateTime($_POST["startDate"]);
     $endDate = new DateTime($_POST["endDate"]);
-
+    
     if ($endDate < $startDate) {
-        echo "<script>alert('La date de fin ne peut pas être inférieure à la date de début.'); window.location.href='create-article.php';</script>";
+        echo "<script>alert('La date de fin ne peut pas être inférieure à la date de début.'); window.location.href='create-articlee.php';</script>";
         exit;
     }
 
@@ -62,8 +62,10 @@ if ($_POST && $_SESSION && $_SESSION["is_connected"])
         <input type="text" name="title" id="title" placeholder="Titre de l'article" class="form-control" required>
         <label for="description">Description</label>
         <textarea name="description" id="description" placeholder="Description de l'article" class="form-control" required></textarea>
-        <label for="destination">Destination</label>
-        <input type="text" name="destination" id="destination" placeholder="Destination de l'article" class="form-control" required>
+        <label for="address">Adresse</label>
+        <input type="text" name="address" id="address" placeholder="Adresse de l'article" class="form-control" required>
+        <label for="country">Pays:</label>
+        <select name="country" id="country" class="form-control" required></select>
         <label for="startDate">Date de début</label>
         <input type="date" name="startDate" id="startDate" class="form-control" required>
         <label for="endDate">Date de fin</label>

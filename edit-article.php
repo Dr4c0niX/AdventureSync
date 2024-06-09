@@ -61,7 +61,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $article->setTitle($_POST["title"]);
     $article->setDescription($_POST["description"]);
-    $article->setDestination($_POST["destination"]);
+    $article->setAddress($_POST["address"]);
+    $article->setCountry($_POST["country"]);
     $article->setStartDate($_POST["startDate"]);
     $article->setEndDate($_POST["endDate"]);
     $articlesManager->update($article);
@@ -74,8 +75,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <input type="text" id="title" name="title" value="<?= $article->getTitle() ?>" required>
     <label for="description">Description :</label>
     <textarea id="description" name="description" required><?= $article->getDescription() ?></textarea>
-    <label for="destination">Destination :</label>
-    <input type="text" id="destination" name="destination" value="<?= $article->getDestination() ?>" required>
+    <label for="address">Adresse :</label>
+    <input type="text" id="address" name="address" value="<?= $article->getAddress() ?>" required>
+    <label for="country">Pays :</label>
+    <select name="country" id="country" class="form-control" required></select>
     <label for="startDate">Date de début :</label>
     <input type="date" id="startDate" name="startDate" value="<?= $article->getStartDate() ?>" required>
     <label for="endDate">Date de fin :</label>

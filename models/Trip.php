@@ -5,7 +5,8 @@ class Trip
     private int $id;
     private string $title;
     private string $description;
-    private string $destination;
+    private string $address;
+    private string $country;
     private string $startDate;
     private string $endDate;
     private bool $collaborative;
@@ -68,14 +69,26 @@ class Trip
         return $this;
     }
 
-    public function getDestination(): string
+    public function getAddress(): string
     {
-        return $this->destination;
+        return $this->address;
     }
 
-    public function setDestination(string $destination): self
+    public function setAddress(string $address): self
     {
-        $this->destination = $destination;
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getCountry(): string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(string $country): self
+    {
+        $this->country = $country;
 
         return $this;
     }

@@ -19,6 +19,11 @@ if ($_POST && $_SESSION && $_SESSION["is_connected"])
         exit;
     }
 
+    if ($_POST["country"] === "Sélectionnez le pays"){
+        echo "<script>alert('Vous devez sélectionner un pays.'); window.location.href='create-article.php';</script>";
+        exit;
+    }
+
     $file_name = '';
     if (isset($_FILES['image']) && $_FILES['image']['name'] != '') {
         $errors = array();
@@ -58,11 +63,13 @@ if ($_POST && $_SESSION && $_SESSION["is_connected"])
     <h1>Créer un voyage</h1>
     <form method="post" enctype="multipart/form-data">
         <label for="title">Titre</label>
-        <input type="text" name="title" id="title" placeholder="Titre de l'article" class="form-control" required>
+        <input type="text" name="title" id="title" placeholder="Titre du voyage" class="form-control" required>
         <label for="description">Description</label>
-        <textarea name="description" id="description" placeholder="Description de l'article" class="form-control" required></textarea>
-        <label for="destination">Destination</label>
-        <input type="text" name="destination" id="destination" placeholder="Destination de l'article" class="form-control" required>
+        <textarea name="description" id="description" placeholder="Description du voyage" class="form-control" required></textarea>
+        <label for="address">Adresse</label>
+        <input type="text" name="address" id="address" placeholder="Adresse du voyage" class="form-control" required>
+        <label for="country">Pays</label>
+        <select name="country" id="country" class="form-control" required></select>
         <label for="startDate">Date de début</label>
         <input type="date" name="startDate" id="startDate" class="form-control" required>
         <label for="endDate">Date de fin</label>

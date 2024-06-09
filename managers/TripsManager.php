@@ -27,11 +27,12 @@ class TripsManager
     public function create(Trip $newTrip): void
     {
         $usersManager = new UsersManager();
-        $req = $this->pdo->prepare("INSERT INTO `trip` (title, description, destination, startDate, endDate, collaborative, private, countOfPerson, image, userId) VALUES (:title, :description, :destination, :startDate, :endDate, :collaborative, :private, :countOfPerson, :image, :userId)");
+        $req = $this->pdo->prepare("INSERT INTO `trip` (title, description, address, country, startDate, endDate, collaborative, private, countOfPerson, image, userId) VALUES (:title, :description, :address, :country, :startDate, :endDate, :collaborative, :private, :countOfPerson, :image, :userId)");
 
         $req->bindValue(":title", htmlspecialchars($newTrip->getTitle()), PDO::PARAM_STR);
         $req->bindValue(":description", htmlspecialchars($newTrip->getDescription()), PDO::PARAM_STR);
-        $req->bindValue(":destination", htmlspecialchars($newTrip->getDestination()), PDO::PARAM_STR);
+        $req->bindValue(":address", htmlspecialchars($newTrip->getAddress()), PDO::PARAM_STR);
+        $req->bindValue(":country", htmlspecialchars($newTrip->getCountry()), PDO::PARAM_STR);
         $req->bindValue(":startDate", htmlspecialchars($newTrip->getStartDate()), PDO::PARAM_STR);
         $req->bindValue(":endDate", htmlspecialchars($newTrip->getEndDate()), PDO::PARAM_STR);
         $req->bindValue(":collaborative", htmlspecialchars($newTrip->isCollaborative()), PDO::PARAM_BOOL);
@@ -86,11 +87,12 @@ class TripsManager
 
     public function update(Trip $trip): void
     {
-        $req = $this->pdo->prepare("UPDATE trip SET title = :title, description = :description, destination = :destination, startDate = :startDate, endDate = :endDate, collaborative = :collaborative, private = :private, countOfPerson = :countOfPerson, image = :image, userId = :userId WHERE id = :id");
+        $req = $this->pdo->prepare("UPDATE trip SET title = :title, description = :description, address = :address, country = :country, startDate = :startDate, endDate = :endDate, collaborative = :collaborative, private = :private, countOfPerson = :countOfPerson, image = :image, userId = :userId WHERE id = :id");
 
         $req->bindValue(":title", htmlspecialchars($trip->getTitle()), PDO::PARAM_STR);
         $req->bindValue(":description", htmlspecialchars($trip->getDescription()), PDO::PARAM_STR);
-        $req->bindValue(":destination", htmlspecialchars($trip->getDestination()), PDO::PARAM_STR);
+        $req->bindValue(":address", htmlspecialchars($trip->getAddress()), PDO::PARAM_STR);
+        $req->bindValue(":country", htmlspecialchars($trip->getCountry()), PDO::PARAM_STR);
         $req->bindValue(":startDate", htmlspecialchars($trip->getStartDate()), PDO::PARAM_STR);
         $req->bindValue(":endDate", htmlspecialchars($trip->getEndDate()), PDO::PARAM_STR);
         $req->bindValue(":collaborative", htmlspecialchars($trip->isCollaborative()), PDO::PARAM_BOOL);

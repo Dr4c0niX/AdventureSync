@@ -66,7 +66,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
 
     $trip->setTitle($_POST["title"]);
     $trip->setDescription($_POST["description"]);
-    $trip->setDestination($_POST["destination"]);
+    $trip->setAddress($_POST["address"]);
+    $trip->setCountry($_POST["country"]);
     $trip->setStartDate($_POST["startDate"]);
     $trip->setEndDate($_POST["endDate"]);
     $trip->setCollaborative(isset($_POST["collaborative"]));
@@ -81,8 +82,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
     <input type="text" id="title" name="title" value="<?= $trip->getTitle() ?>" required>
     <label for="description">Description:</label>
     <textarea id="description" name="description" required><?= $trip->getDescription() ?></textarea>
-    <label for="destination">Destination:</label>
-    <input type="text" id="destination" name="destination" value="<?= $trip->getDestination() ?>" required>
+    <label for="address">Adresse:</label>
+    <input type="text" id="address" name="address" value="<?= $trip->getAddress() ?>" required>
+    <select name="country" id="country" class="form-control" required></select>
     <label for="startDate">Start Date:</label>
     <input type="date" id="startDate" name="startDate" value="<?= $trip->getStartDate() ?>" required>
     <label for="endDate">End Date:</label>
