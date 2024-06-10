@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
     <textarea id="description" name="description" required><?= $trip->getDescription() ?></textarea>
     <label for="address">Adresse:</label>
     <input type="text" id="address" name="address" value="<?= $trip->getAddress() ?>" required>
-    <select name="country" id="country" class="form-control" required></select>
+    <select name="country" id="country" required></select>
     <label for="startDate">Start Date:</label>
     <input type="date" id="startDate" name="startDate" value="<?= $trip->getStartDate() ?>" required>
     <label for="endDate">End Date:</label>

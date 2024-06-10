@@ -52,26 +52,25 @@ if ($_POST && $_SESSION && $_SESSION["is_connected"])
     $articlesManager->create(new Article($_POST));
     echo "<script>alert('Bravo ! Vous venez de créer votre article');window.location.href='index.php'</script>";
 }
-
 ?>
 
-<div>
+<div class="container">
     <h1>Créer un article</h1>
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" class="create-form">
         <label for="title">Titre</label>
-        <input type="text" name="title" id="title" placeholder="Titre de l'article" class="form-control" required>
+        <input type="text" name="title" id="title" placeholder="Titre de l'article" required>
         <label for="description">Description</label>
-        <textarea name="description" id="description" placeholder="Description de l'article" class="form-control" required></textarea>
+        <textarea name="description" id="description" placeholder="Description de l'article" required></textarea>
         <label for="address">Adresse</label>
-        <input type="text" name="address" id="address" placeholder="Adresse de l'article" class="form-control" required>
+        <input type="text" name="address" id="address" placeholder="Adresse de l'article" required>
         <label for="country">Pays:</label>
-        <select name="country" id="country" class="form-control" required></select>
+        <select name="country" id="country" required></select>
         <label for="startDate">Date de début</label>
-        <input type="date" name="startDate" id="startDate" class="form-control" required>
+        <input type="date" name="startDate" id="startDate" required>
         <label for="endDate">Date de fin</label>
-        <input type="date" name="endDate" id="endDate" class="form-control" required>
+        <input type="date" name="endDate" id="endDate" required>
         <label for="image">Photos de votre voyage</label>
-        <input type="file" name="image" id="image" class="form-control">
-        <input type="submit" value="Créer un article" class="mt-2 btn btn-primary">
+        <input type="file" name="image" id="image">
+        <input type="submit" value="Créer un article">
     </form>
 </div>

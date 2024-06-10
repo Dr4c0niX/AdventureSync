@@ -63,25 +63,25 @@ if ($_POST && $_SESSION && $_SESSION["is_connected"])
     <h1>Créer un voyage</h1>
     <form method="post" enctype="multipart/form-data">
         <label for="title">Titre</label>
-        <input type="text" name="title" id="title" placeholder="Titre du voyage" class="form-control" required>
+        <input type="text" name="title" id="title" placeholder="Titre du voyage" required>
         <label for="description">Description</label>
-        <textarea name="description" id="description" placeholder="Description du voyage" class="form-control" required></textarea>
+        <textarea name="description" id="description" placeholder="Description du voyage" required></textarea>
         <label for="address">Adresse</label>
-        <input type="text" name="address" id="address" placeholder="Adresse du voyage" class="form-control" required>
+        <input type="text" name="address" id="address" placeholder="Adresse du voyage" required>
         <label for="country">Pays</label>
-        <select name="country" id="country" class="form-control" required></select>
+        <select name="country" id="country" required></select>
         <label for="startDate">Date de début</label>
-        <input type="date" name="startDate" id="startDate" class="form-control" required>
+        <input type="date" name="startDate" id="startDate"required>
         <label for="endDate">Date de fin</label>
-        <input type="date" name="endDate" id="endDate" class="form-control" required>
+        <input type="date" name="endDate" id="endDate"required>
         <label for="collaborative">Collaboratif</label>
-        <input type="checkbox" name="collaborative" id="collaborative" class="form-control">
+        <input type="checkbox" name="collaborative" id="collaborative">
         <label for="private">Privé</label>
-        <input type="checkbox" name="private" id="private" class="form-control">
+        <input type="checkbox" name="private" id="private">
         <label for="countOfPerson">Nombre de personnes</label>
-        <input type="number" name="countOfPerson" id="countOfPerson" min="1" class="form-control" required>
+        <input type="number" name="countOfPerson" id="countOfPerson" min="1" required>
         <label for="image">Photos de votre voyage</label>
-        <input type="file" name="image" id="image" class="form-control">
-        <input type="submit" value="Créer un voyage" class="mt-2 btn btn-primary">
+        <input type="file" name="image" id="image">
+        <input type="submit" value="Créer un voyage">
     </form>
 </div>

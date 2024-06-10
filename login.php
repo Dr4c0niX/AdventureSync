@@ -1,14 +1,16 @@
 <?php require("./layout/header.php");
 ?>
-<h1 class="mt-2">Connexion utilisateur</h1>
+<h1>Connexion utilisateur</h1>
 <form method="post">
     <label for="email">Email</label>
-    <input type="email" name="email" id="email" placeholder="Votre adresse e-mail" class="form-control" required>
+    <input type="email" name="email" id="email" placeholder="Votre adresse e-mail"  required>
     <label for="password">Mot de passe</label>
-    <input type="password" name="password" id="password" placeholder="Votre mot de passe" class="form-control" required minlength=6 maxlength=30>
-    <input type="submit" value="Se connecter" class="mt-2 btn btn-primary">
+    <input type="password" name="password" id="password" placeholder="Votre mot de passe" required minlength=6 maxlength=30>
+    <input type="submit" value="Se connecter">
 </form> 
-<a href="./register.php">Créer un compte utilisateur</a>
+<div class="button-container">
+    <a href="./register.php">Créer un compte utilisateur</a>
+</div>
 <?php
 
 if ($_POST) {
@@ -21,9 +23,7 @@ if ($_POST) {
         // Redirection sur la page d'accueil
         echo "<script>window.location.href='index.php'</script>";
     } else {
-        echo '<p class="error-message">Email ou mot de passe incorrect</p>'; 
+        echo '<p>Email ou mot de passe incorrect</p>'; 
     }
 }
-
-require("./layout/footer.php");
 ?>

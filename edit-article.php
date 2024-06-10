@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <label for="address">Adresse :</label>
     <input type="text" id="address" name="address" value="<?= $article->getAddress() ?>" required>
     <label for="country">Pays :</label>
-    <select name="country" id="country" class="form-control" required></select>
+    <select name="country" id="country" required></select>
     <label for="startDate">Date de début :</label>
     <input type="date" id="startDate" name="startDate" value="<?= $article->getStartDate() ?>" required>
     <label for="endDate">Date de fin :</label>

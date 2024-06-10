@@ -25,72 +25,51 @@
 
     $usersManager = new UsersManager();
     ?>
-    <header>
-<!--    <nav class="navbar">
-            <ul class="nav-links">
-                <li><a href="#home">Accueil</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#about">À propos</a></li>
-            </ul>
-            <div class="logo">
-                <img src="./images/logo/adventuresync-high-resolution-logo-transparent.png" alt="AdventureSync Logo">
-            </div>
-            <ul class="nav-links">
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#signup" class="signup">Inscription</a></li>
-            </ul>
-        </nav>-->        
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="./index.php">Mon super site !</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="./index.php">Accueil</a>
+    <header>    
+        <nav class="nav-bar">
+            <div>
+                <ul class="nav-links">
+                    <li class="logo">
+                        <a href="index.php"><img src="./images/logo/logo.png" alt="logo du site"></a>
+                    </li>
+                    <li>
+                        <a href="./trip.php">Voyages</a>
+                    </li>
+                    <li>
+                        <a href="./article.php">Articles</a>
+                    </li>
+                    <?php if ($_SESSION && $_SESSION["is_connected"]) : ?>
+                        <li>
+                            <a href="./create-trip.php">Ajouter un voyage</a>
                         </li>
                         <li>
-                            <a class="nav-link" href="./trip.php">Voyages</a>
+                            <a href="./create-article.php">Ajouter un article</a>
+                        </li>
+                    <?php endif ?>
+                    <?php if ($_SESSION && $_SESSION["is_connected"]) : ?>
+                        <li>
+                            <a href="./logout.php">Se déconnecter</a>
                         </li>
                         <li>
-                            <a class="nav-link" href="./article.php">Articles</a>
+                            <a href="./edit-profile.php?email=<?= $_SESSION["is_connected"] ?>">Modifier mon profil</a> <!-- lien de la page à mettre avec l'id de user -->
                         </li>
-                        <?php if ($_SESSION && $_SESSION["is_connected"]) : ?>
-                            <li class="nav-item">
-                                <a class="nav-link" href="./create-trip.php">Ajouter un voyage</a>
-                            </li>
+                        <?php if ($usersManager->getLoggedInUser()->isAdmin()) : ?>
                             <li>
-                                <a class="nav-link" href="./create-article.php">Ajouter un article</a>
+                                <a href="./admin.php">Admin</a>
                             </li>
                         <?php endif ?>
-                        <?php if ($_SESSION && $_SESSION["is_connected"]) : ?>
-                            <li class="nav-item">
-                                <a class="nav-link" href="./logout.php">Se déconnecter</a>
-                            </li>
-                            <li>
-                                <a class="nav-link" href="./edit-profile.php?email=<?= $_SESSION["is_connected"] ?>">Modifier votre profil</a> <!-- lien de la page à mettre avec l'id de user -->
-                            </li>
-                            <?php if ($usersManager->getLoggedInUser()->isAdmin()) : ?>
-                                <li>
-                                    <a class="nav-link" href="./admin.php">Admin</a>
-                                </li>
-                            <?php endif ?>
-                        <?php else : ?>
-                            <li class="nav-item">
-                                <a class="nav-link" href="./login.php">Se connecter</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="./register.php">Créer un compte</a>
-                            </li>
-                        <?php endif ?>
-                    </ul>
-                </div>
+                    <?php else : ?>
+                        <li>
+                            <a href="./login.php">Se connecter  </a>
+                        </li>
+                        <li>
+                            <a href="./register.php">Créer un compte</a>
+                        </li>
+                    <?php endif ?>
+                </ul>
             </div>
         </nav>
     </header>
-    <main class="container">
+    <main>
 
     <script src="script.js"></script>
