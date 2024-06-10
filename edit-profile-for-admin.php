@@ -59,8 +59,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="text" id="lastName" name="lastName" value="<?php echo $user->getLastName(); ?>">
         <label for="birthDate">Date de naissance :</label>
         <input type="date" id="birthDate" name="birthDate" value="<?php echo $user->getBirthDate(); ?>">
-        <label for="admin">Admin</label>
-        <input type="checkbox" id="admin" name="admin" <?php echo $user->isAdmin() ? 'checked' : ''; ?>>
+        <?php if ($usersManager->getLoggedInUser()->isAdmin() === false): ?>
+        	<label for="admin">Admin</label>
+        	<input type="checkbox" id="admin" name="admin" <?php echo $user->isAdmin() ? 'checked' : ''; ?>>
+        <?php endif; ?>
         <input type="submit" value="Mettre à jour">
     </form>
 </div>
