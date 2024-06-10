@@ -9,13 +9,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AdventureSync</title>
-    <link rel="shortcut icon" href="./images/favicon/adventuresync-favicon-color.png" type="image/x-icon">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="shortcut icon" href="./images/favicon/adventuresync-favicon-color.png" type="image/x-icon"> <!-- favicon -->
+    <link rel="stylesheet" href="./style.css"> <!-- lien vers le fichier css -->
 </head>
 
 <body>
-    <?php
-    spl_autoload_register(function (string $class) {
+    <?php 
+    spl_autoload_register(function (string $class) { // Autoload des classes
         if (str_contains($class, "Manager")) {
             require("./managers/$class.php");
         } else {
@@ -26,7 +26,7 @@
     $usersManager = new UsersManager();
     ?>
     <header>    
-        <nav class="nav-bar">
+        <nav class="nav-bar"> <!-- barre de navigation -->
             <div>
                 <ul class="nav-links">
                     <li class="logo">
@@ -38,7 +38,7 @@
                     <li>
                         <a href="./article.php">Articles</a>
                     </li>
-                    <?php if ($_SESSION && $_SESSION["is_connected"]) : ?>
+                    <?php if ($_SESSION && $_SESSION["is_connected"]) : ?> <!-- si l'utilisateur est connecté, ajout des cases 'Ajouter un voyage'/'Ajouter un article'-->
                         <li>
                             <a href="./create-trip.php">Ajouter un voyage</a>
                         </li>
@@ -46,19 +46,19 @@
                             <a href="./create-article.php">Ajouter un article</a>
                         </li>
                     <?php endif ?>
-                    <?php if ($_SESSION && $_SESSION["is_connected"]) : ?>
+                    <?php if ($_SESSION && $_SESSION["is_connected"]) : ?> <!-- si l'utilisateur est connecté, ajout des cases 'Se déconnecter'/'Modifier mon profil'-->
                         <li>
                             <a href="./logout.php">Se déconnecter</a>
                         </li>
                         <li>
-                            <a href="./edit-profile.php?email=<?= $_SESSION["is_connected"] ?>">Modifier mon profil</a> <!-- lien de la page à mettre avec l'id de user -->
+                            <a href="./edit-profile.php?email=<?= $_SESSION["is_connected"] ?>">Modifier mon profil</a> <!-- lien de la page à mettre à jour avec l'id de user -->
                         </li>
-                        <?php if ($usersManager->getLoggedInUser()->isAdmin()) : ?>
+                        <?php if ($usersManager->getLoggedInUser()->isAdmin()) : ?> <!-- si l'utilisateur est admin, ajout de la case 'Admin'-->
                             <li>
                                 <a href="./admin.php">Admin</a>
                             </li>
                         <?php endif ?>
-                    <?php else : ?>
+                    <?php else : ?> <!-- si l'utilisateur n'est pas connecté, ajout des cases 'Se connecter'/'Créer un compte'-->
                         <li>
                             <a href="./login.php">Se connecter  </a>
                         </li>
@@ -72,4 +72,4 @@
     </header>
     <main>
 
-    <script src="script.js"></script>
+    <script src="script.js"></script> <!-- lien vers le fichier javascript -->

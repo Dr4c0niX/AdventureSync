@@ -1,16 +1,16 @@
 <?php
-require("models/Article.php");
+require("models/Article.php"); // on inclut de la classe Article
 
 class ArticlesManager
 {
     private PDO $pdo;
 
-    public function __construct()
+    public function __construct() 
     {
-        $dbName = "162.19.95.184";
+        $dbName = "adventure_sync";
         $port = 3306;
-        $userName = "u29_suouBueS7F";
-        $password = "!lKgbN5Z@lvE^0hLYVJK=f+M";
+        $userName = "root";
+        $password = "MAMPrizea2024@";
         try {
             $this->setPdo(new PDO("mysql:host=localhost;dbname=$dbName;port=$port;charset=utf8mb4", $userName, $password));
         } catch (PDOException $error) {
@@ -24,12 +24,12 @@ class ArticlesManager
         return $this;
     }
 
-    public function create(Article $newArticle): void
+    public function create(Article $newArticle): void //on crée un nouvel article
     {
         $usersManager = new UsersManager();
         $req = $this->pdo->prepare("INSERT INTO `article` (title, description, address, country, startDate, endDate, image, userId) VALUES (:title, :description, :address, :country, :startDate, :endDate, :image, :userId)");
 
-        $req->bindValue(":title", htmlspecialchars($newArticle->getTitle()), PDO::PARAM_STR);
+        $req->bindValue(":title", htmlspecialchars($newArticle->getTitle()), PDO::PARAM_STR); //on utilise htmlspecialchars pour éviter les failles XSS
         $req->bindValue(":description", htmlspecialchars($newArticle->getDescription()), PDO::PARAM_STR);
         $req->bindValue(":address", htmlspecialchars($newArticle->getAddress()), PDO::PARAM_STR);
         $req->bindValue(":country", htmlspecialchars($newArticle->getCountry()), PDO::PARAM_STR);
@@ -40,7 +40,7 @@ class ArticlesManager
         $req->execute();
     }
 
-    public function getById(int $id): Article
+    public function getById(int $id): Article //on récupère un article par son id
     {
         $req = $this->pdo->prepare("SELECT * FROM article WHERE id = :id");
         $req->bindValue(":id", $id, PDO::PARAM_INT);
@@ -49,7 +49,7 @@ class ArticlesManager
         return new Article($data);
     }
 
-    public function getByUserEmail(string $email): Article
+    public function getByUserEmail(string $email): Article //on récupère un article par l'email de l'utilisateur
     {
         $req = $this->pdo->prepare("SELECT * FROM article WHERE userId = :userId");
         $req->bindValue(":userId", $email, PDO::PARAM_STR);
@@ -58,7 +58,7 @@ class ArticlesManager
         return new Article($data);
     }
 
-    public function getAllArticlesByUserId($userId) {
+    public function getAllArticlesByUserId($userId) { //on récupère tous les articles d'un utilisateur
         $articles = array();
         $query = $this->pdo->prepare("SELECT * FROM article WHERE userId = :userId");
         $query->execute(['userId' => $userId]);
@@ -70,7 +70,7 @@ class ArticlesManager
         return $articles;
     }
 
-    public function getAll(): array
+    public function getAll(): array //on récupère tous les articles
     {
         $req = $this->pdo->prepare("SELECT * FROM article");
         $req->execute();
@@ -82,7 +82,7 @@ class ArticlesManager
         return $articles;
     }
 
-    public function update(Article $article): void
+    public function update(Article $article): void //on met à jour un article
     {
         $req = $this->pdo->prepare("UPDATE article SET title = :title, description = :description, address = :address, country = :country, startDate = :startDate, endDate = :endDate, image = :image, userId = :userId WHERE id = :id");
         $req->bindValue(":title", htmlspecialchars($article->getTitle()), PDO::PARAM_STR);
@@ -97,7 +97,7 @@ class ArticlesManager
         $req->execute();
     }
 
-    public function delete(int $id): void
+    public function delete(int $id): void //on supprime un article
     {
         $req = $this->pdo->prepare("DELETE FROM article WHERE id = :id");
         $req->bindValue(":id", $id, PDO::PARAM_INT);

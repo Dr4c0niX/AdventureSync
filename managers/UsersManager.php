@@ -1,4 +1,5 @@
 <?php
+require("models/User.php"); // on inclut de la classe User
 
 class UsersManager
 {
@@ -6,10 +7,10 @@ class UsersManager
 
     public function __construct()
     {
-        $dbName = "162.19.95.184";
+        $dbName = "adventure_sync";
         $port = 3306;
-        $userName = "u29_suouBueS7F";
-        $password = "!lKgbN5Z@lvE^0hLYVJK=f+M";
+        $userName = "root";
+        $password = "MAMPrizea2024@";
         try {
             $this->setDb(new PDO("mysql:host=localhost;dbname=$dbName;port=$port;charset=utf8mb4", $userName, $password));
         } catch (PDOException $error) {
@@ -23,7 +24,7 @@ class UsersManager
         return $this;
     }
 
-    public function create(User $newUser): void
+    public function create(User $newUser): void //on crée un nouvel utilisateur
     {
         $req = $this->db->prepare("INSERT INTO `user` (email, username, firstName, lastName, password, birthDate) VALUES (:email, :username, :firstName, :lastName, :password, :birthDate)");
 
@@ -36,7 +37,7 @@ class UsersManager
         $req->execute();
     }
 
-    public function getByEmail(string $email): User
+    public function getByEmail(string $email): User //on récupère un utilisateur par son email
     {
         $req = $this->db->prepare("SELECT * FROM user WHERE email = :email");
         $req->bindValue(":email", $email, PDO::PARAM_STR);
@@ -45,7 +46,7 @@ class UsersManager
         return new User($data);
     }
 
-    public function getUsersOrderedByEmail(): array
+    public function getUsersOrderedByEmail(): array //on récupère tous les utilisateurs par ordre alphabétique
     {
         $req = $this->db->query("SELECT * FROM `user` ORDER BY email");
         $req->execute();
@@ -57,7 +58,7 @@ class UsersManager
         return $users;
     }
 
-    public function getById(int $id): User
+    public function getById(int $id): User //on récupère un utilisateur par son id
     {
         $req = $this->db->prepare("SELECT * FROM user WHERE id = :id");
         $req->bindValue(":id", $id, PDO::PARAM_INT);
@@ -66,7 +67,7 @@ class UsersManager
         return new User($data);
     }
     
-    public function getLoggedInUser() {
+    public function getLoggedInUser() { //on récupère l'utilisateur connecté
         if (isset($_SESSION["is_connected"])) {
             return $this->getByEmail($_SESSION["is_connected"]);
         }
@@ -74,7 +75,7 @@ class UsersManager
         return null;
     }
 
-    public function getAll(): array
+    public function getAll(): array //on récupère tous les utilisateurs
     {
         $req = $this->db->query("SELECT * FROM `user`");
         $req->execute();
@@ -86,14 +87,14 @@ class UsersManager
         return $users;
     }
 
-    public function emailExists($email) 
+    public function emailExists($email)  //on vérifie si l'email existe
     {
         $query = $this->db->prepare("SELECT * FROM user WHERE email = :email");
         $query->execute(['email' => $email]);
         return $query->fetch() !== false;
     }
 
-    public function update(User $user): void
+    public function update(User $user): void //on met à jour un utilisateur
     {
         $req = $this->db->prepare("UPDATE user SET email = :email, username = :username, firstName = :firstName, lastName = :lastName, password = :password, birthDate = :birthDate, admin = :admin WHERE id = :id");
 
@@ -108,7 +109,7 @@ class UsersManager
         $req->execute();
     }
 
-    public function delete(User $user): void
+    public function delete(User $user): void //on supprime un utilisateur
     {
         $req = $this->db->prepare("DELETE FROM user WHERE id = :id");
         $req->bindValue(":id", $user->getId(), PDO::PARAM_INT);
