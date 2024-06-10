@@ -50,6 +50,7 @@ $trips = $tripManager->getAll();
         <?php foreach ($trips as $trip): ?>
             <div class="card">
                 <p><?php echo $trip->getTitle(); ?></p>
+                <p>Privé : <?= $trip->isPrivate() ? "Oui" : "Non"?></p>
                 <form action="delete-trip.php" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce voyage ?');">
                     <input type="hidden" name="id" value="<?php echo $trip->getId(); ?>">
                     <button type="submit">Supprimer</button>
